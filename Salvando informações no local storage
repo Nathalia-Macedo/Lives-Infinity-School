@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+       body{
+        color:black;
+        background-image: url("https://i.pinimg.com/564x/45/c9/c5/45c9c519fc03e05d18406de6fb68f8ab.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        display:flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+       }
+
+       .cadastro{
+        backdrop-filter: blur(5px);
+        width: 40%;
+        width: 40%;
+        height: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        flex-direction: column;
+        gap:1rem;
+        box-shadow:  2px 1px 30px  black,
+        1px 7px 50px black;
+       }
+
+       .cadastro input{
+        box-shadow: 1px 3px 5px black;
+
+        width: 250px;
+        padding: 0.6rem;
+        border-radius: 5px;
+        border:none;
+       }
+
+       .cadastro label{
+        font-family:'Times New Roman', Times, serif ;
+        font-size:20px;
+        color:black;
+        
+       }
+
+       .cadastro button{
+        width: 150px;
+        padding: 0.6rem;
+        border:none;
+        border-radius: 5px;
+        box-shadow: 1px 3px 5px black;
+        background-color: white;
+        color:white;
+       }
+
+       button:active{
+        background-color: grey;
+       }
+
+       p{
+        font-size: 30px;
+        text-decoration: underline;
+       }
+
+       .login{
+        backdrop-filter: blur(5px);
+        width: 40%;
+        height: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        flex-direction: column;
+        gap:1rem;
+        box-shadow:  2px 1px 3px  black,
+        1px 7px 50px black;
+       }
+       
+
+       .login input{
+        box-shadow: 1px 3px 5px black;
+
+        width: 250px;
+        padding: 0.6rem;
+        border-radius: 5px;
+        border:none;
+       }
+
+       .login img{
+        width: 10%;
+       }
+
+       .login label{
+        font-family:'Times New Roman', Times, serif ;
+        font-size:20px;
+        
+       }
+
+       .login button{
+        background-color:green;
+        width: 150px;
+        padding: 0.6rem;
+        border:none;
+        border-radius: 5px;
+        color:white;
+        box-shadow: 1px 3px 5px black;
+       }
+
+       button:active{
+        background-color: grey;
+       }
+
+       .cadastro img{
+        width: 10%;
+       }
+
+      
+
+
+    </style>
+</head>
+<body>
+
+    <!--Criando a div onde vai ficar a tela de login-->
+    <div class="login">
+    
+        <label for="user"> Usuário: </label>
+        <input id="user" placeholder="Digite o nome de usuario" type="text">
+        <label for="password"> Senha: </label>
+        <input id="password" placeholder="Digite a senha" type="password">
+        <button onclick="login()">Login</button>
+        <button style="background-color: rgb(27, 98, 253)" onclick="page_cadastro()">Cadastre-se</button>
+
+
+    </div>
+<!--Criando a div onde vai ficar a tela de cadastro-->
+<div class="cadastro">
+
+  
+    <label for="usuario"> Usuário:</label>
+    <input id="usuario" placeholder="Digite o nome de usuario" type="text">
+    <label for="senha"> Senha: </label>
+    <input id="senha" placeholder="Digite a senha: " type="text">
+    <button style=" background-color:green;" onclick="cadastrar()">Cadastrar</button>
+    <button style="background-color: rgb(27, 98, 253)" onclick="voltar()">Voltar</button>
+
+
+
+
+
+</div>
+
+    
+<script>
+    
+/*Iniciando a variável funcionários com os dados que já estão no local storage ou então começar com um array vazio*/
+/*O JSON.Parse converte a string para um objeto javascript*/
+
+let funcionarios = JSON.parse(localStorage.getItem("Banco_de_dados")) || [];
+/*Criando a função para cadastrar um novo usuario*/
+function cadastrar() {
+  /*pegando o valor digitado nos inputs usuario e senha*/
+  let usuario = document.getElementById("usuario").value;
+  let senha = document.getElementById("senha").value;
+  /*Criando um funcionário novo com os dados que o usuario digitou e jogando dentro da lista funcionários*/
+  let funcionario_novo = { "usuario": usuario, "senha": senha };
+  funcionarios.push(funcionario_novo);
+  /*Enviando os itens para dentro do local storage*/
+  localStorage.setItem("Banco_de_dados", JSON.stringify(funcionarios));
+  /*Dando um alerta após fazer esse envio*/ 
+  alert("Cadastrado");
+}
+
+
+//Definindo uma função para login
+function login() {
+
+  //Pegando os valores que o usuário digitou
+  let usuario = document.getElementById("user").value;
+  let senha = document.getElementById("password").value;
+
+  
+  //pegando as informações do local storage
+  let funcionarios_ls = JSON.parse(localStorage.getItem("Banco_de_dados"));
+  //criando uma variável controle
+  let loginBemSucedido = false;
+  //percorrendo nosso local storage:
+  //para cada item dentro do local storage:
+  for (let i of funcionarios_ls) {
+    //se o valor digitado no campo usuario e no camppo senha corresponder a algum item dentro do local storage:
+    if (usuario === i.usuario && senha === i.senha) {
+      //A variável controle troca pra True
+      loginBemSucedido = true;
+      // e o código sai do laço
+      break;
+    }
+  }
+
+ 
+
+  
+
+    // se loginBemSucedido estiver como verdadeiro
+        if (loginBemSucedido) {
+            //mostramos a mensagem bem vindo
+            alert("Bem-vindo");
+            //e então redirecionamos para outra página
+            window.location.href = "#";
+            //senão, dizemos que o usuario não está cadastrado
+        } else {
+            alert("Usuário não cadastrado");
+        }
+}
+
+function voltar() {
+  let div_login = document.querySelector(".login");
+  div_login.style.display = "flex";
+  let div_cadastro = document.querySelector(".cadastro");
+  div_cadastro.style.display = "none";
+}
+
+function page_cadastro() {
+  let div_login = document.querySelector(".login");
+  div_login.style.display = "none";
+  let div_cadastro = document.querySelector(".cadastro");
+  div_cadastro.style.display = "flex";
+}
+
+window.onload = function () {
+  voltar();
+};
+
+</script>
+</body>
+</html>
